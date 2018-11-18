@@ -1,0 +1,70 @@
+{% extends "carts/base.html" %}
+{% load static %}
+
+{% block styles %}
+  <!-- Bokeh styles-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/0.12.13/bokeh.min.css" />
+{% endblock %}
+
+{% block main %}
+ <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+   <h1 class="h2">Fleet</h1>
+   <div class="btn-toolbar mb-2 mb-md-0">
+     <div class="btn-group mr-2">
+       <button class="btn btn-sm btn-outline-secondary">Share</button>
+       <button class="btn btn-sm btn-outline-secondary">Export</button>
+     </div>
+     <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+       <span data-feather="calendar"></span>
+       Current Data
+     </button>
+   </div>
+ </div>
+ {{ plot_div | safe }}
+ {{ plot_script | safe}}
+{% endblock %}
+
+{% block scripts %}
+ {{ block.super }}
+
+ <!--<script src="{% static 'carts/js/bokeh/bokeh-0.12.13.min.js' %}"></script>
+ <script src="{% static 'carts/js/bokeh/bokeh-widgets-0.12.13.min.js' %}"></script>
+ <script src="{% static 'carts/js/bokeh/bokeh-tables-0.12.13.min.js' %}"></script>-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/0.12.13/bokeh.min.js"></script>
+ </script>
+
+ <!-- Bokeh Scripts -->
+ <script type="text/javascript" src="{% static 'carts/js/bokeh/bokeh-api-0.12.9.min.js' %}"></script>
+
+ <!-- Graphs -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+ <script>
+   var ctx = document.getElementById("myChart");
+   var myChart = new Chart(ctx, {
+     type: 'line',
+     data: {
+       labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+       datasets: [{
+         data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+         lineTension: 0,
+         backgroundColor: 'transparent',
+         borderColor: '#007bff',
+         borderWidth: 4,
+         pointBackgroundColor: '#007bff'
+       }]
+     },
+     options: {
+       scales: {
+         yAxes: [{
+           ticks: {
+             beginAtZero: false
+           }
+         }]
+       },
+       legend: {
+         display: false,
+       }
+     }
+   });
+ </script>
+{% endblock %}

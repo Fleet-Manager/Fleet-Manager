@@ -1,0 +1,133 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {% block title %}<title>Fleet Manager</title>{% endblock %}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'carts/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'carts/dashboard.css' %}" />
+
+    <!-- JQuery inline scripting support -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
+    <!-- Custom styles for each template -->
+    {% block styles %}
+    {% endblock styles %}
+
+    {% block inputs %}
+    {% endblock inputs %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fleet Manager</a>
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-lg dropdown-toggle" id="fleet_dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if selected_fleet %}
+              {{ selected_fleet }}
+          {% else %}
+            Select fleet
+          {% endif %}
+        </button>
+        {% if cart_fleet_list %}
+          <div class="dropdown-menu">
+            {% for cart_fleet in cart_fleet_list %}
+              <a class="dropdown-item" href="#" id="{{ cart_fleet.name }}">
+                {{ cart_fleet.name }}
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>No cart fleets have been imported.</p>
+        {% endif %}
+        </button>
+      </div>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="admin">Admin</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                {% if home %}
+                  <a class="nav-link active" href="#">
+                {% else %}
+                  <a class="nav-link" href="{% url 'carts:home' %}">
+                {% endif %}
+                    <span data-feather="home" style="margin-bottom:1px"></span>
+                    Fleet Analysis <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                {% if import_data %}
+                  <a class="nav-link active" href="#">
+                {% else %}
+                  <a class="nav-link" href="{% url 'carts:import data' %}">
+                {% endif %}
+                    <span data-feather="file-text" style="margin-bottom:1px"></span>
+                    Import Data
+                  </a>
+              </li>
+              <li class="nav-item">
+                {% if cart_viewer %}
+                  <a class="nav-link active" href="#">
+                {% else %}
+                  <a class="nav-link" href="{% url 'carts:cart viewer' %}">
+                {% endif %}
+                  <span data-feather="shopping-cart" style="margin-bottom:1px"></span>
+                  Cart Viewer
+                </a>
+              </li>
+              <li class="nav-item">
+                {% if cart_groups %}
+                  <a class="nav-link active" href="#">
+                {% else %}
+                  <a class="nav-link" href="{% url 'carts:cart groups' %}">
+                {% endif %}
+                  <span data-feather="users" style="margin-bottom:1px"></span>
+                  Cart Groups
+                </a>
+              </li>
+          </div>
+        </nav>
+
+        {% if home or import_data %}
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        {% else %}
+          <main role="main" class="col-md-7 ml-sm-auto col-lg-8 pt-3 px-4">
+        {% endif %}
+        {% block main %}
+        {% endblock main %}
+        </main>
+        {% block right-main %}
+        {% endblock right-main %}
+      </div>
+    </div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block scripts %}
+      <script src="{% static 'carts/js/bootstrap/popper.min.js' %}"></script>
+      <script src="{% static 'carts/js/bootstrap/bootstrap.min.js' %}"></script>
+      <script src="{% static 'carts/js/jquery.js' %}"></script>
+      <script src="{% static 'carts/js/dropdown.js' %}"></script>
+      <!-- Icons -->
+      <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+      <script>
+        feather.replace()
+      </script>
+    {% endblock scripts %}
+  </body>
+</html>

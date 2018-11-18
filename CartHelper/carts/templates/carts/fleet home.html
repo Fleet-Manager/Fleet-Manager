@@ -1,0 +1,9 @@
+{% if latest_cart_list %}
+ 	<ul>
+	{% for cart in latest_cart_list %}
+		<li>{{cart.number }}</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No polls are available.</p>
+{% endif %}

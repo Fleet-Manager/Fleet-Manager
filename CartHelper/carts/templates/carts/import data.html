@@ -1,0 +1,41 @@
+{% extends 'carts/base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Import Data</title>
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'carts/css/file-upload.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h2>Select files from your computer</h2>
+    <form action="http://127.0.0.1:8000/import/" method="post" enctype="multipart/form-data" id="js-upload-form"> {% csrf_token %}
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="file" name="files[]" id="js-upload-files" multiple>
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+      </div>
+    </form>
+  </div>
+  <h1 class="h2">Or drag and drop file below</h1>
+  <form action="http://127.0.0.1:8000/import/" method="post" enctype="multipart/form-data" id="js-upload-drag-form"> {% csrf_token %}
+    <input type="hidden" name="files[]" id="js-drag-files" multiple>
+    <div class="upload-drop-zone" id="drop-zone">
+      Just drag and drop files here
+    </div>
+  </form>
+  <div class="js-upload-finished">
+    <h3>Processed files</h3>
+    <div class="list-group" id="upload-list">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'carts/js/file-upload.js' %}"></script>
+{% endblock %}

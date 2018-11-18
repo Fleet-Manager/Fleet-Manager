@@ -1,0 +1,68 @@
+{% extends "carts/base cart viewer.html" %}
+{% load static %}
+
+{% block title %}
+  <title>Cart Groups</title>
+{% endblock %}
+
+{% block main %}
+  <a class="btn btn-primary btn-block" data-toggle="collapse" href="#newCartGroup" role="button" aria-expanded="false" aria-controls="collapseExample" id="newCartGroup-btn">
+    Create New Cart Group
+  </a>
+  <div class="collapse" id="newCartGroup">
+    <form action="http://127.0.0.1:8000/groups/" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <div class="form-group row">
+          <div class="col">
+            <input type="text" class="form-control mt-3" name="GroupName" placeholder="Group Name">
+          </div>
+          <div class="col">
+            <div id="cpicker" class="input-group colorpicker-component mt-3">
+              <input type="text" class="form-control input-lg" name="GroupColor" placeholder="Cart Group Color"/>
+              <span class="btn btn-outline-secondary input-group-addon dropdown-toggle"><i></i></span>
+            </div>
+            <script>
+              $(function () {
+                $('#cpicker')
+                  .colorpicker({
+                  })
+                  .on('colorpickerChange colorpickerCreate', function (e) {
+                    $('#submit-btn')
+                      .css('background-color', e.color.toRgbString());
+
+                    e.colorpicker.picker.parents('.panel-body')
+                      .css('background-color', e.color.complement().toRgbString());
+                  });
+              });
+            </script>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="selectedCartsList">Select Carts</label>
+          <select multiple class="form-control" name="GroupCarts" id="selectedCartsList">
+          </select>
+        </div>
+        <div class="form-group row">
+          <div class="col text-center">
+            <button type="submit" class="btn mt-3 btn-block" id="submit-btn">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="table-responsive" id=data_table>
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Amp/Hrs</th>
+          <th>Miles</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody id=data_list>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
