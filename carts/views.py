@@ -6,7 +6,7 @@ import pdb
 
 
 from bokeh.plotting import figure, output_file, show
-from bokeh.embed import components, autoload_server
+from bokeh.embed import components
 
 from .models import Cart, CartGroup, DataSet, CartFleet, DataCollection, Fault
 from .file_parser import parse_file
